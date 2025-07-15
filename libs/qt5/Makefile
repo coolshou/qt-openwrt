@@ -11,15 +11,15 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qt5
 PKG_VERSION:=5.15
-PKG_RELEASE:=6
-PKG_MD5SUM:=eac9a97ea5335eeb1a8f0c39d016bf70
+PKG_RELEASE:=17
+PKG_MD5SUM:=5f212232bbc41f2eabbdee4fcbc4040e
 
 PKG_SOURCE:=qt-everywhere-opensource-src-$(PKG_VERSION).$(PKG_RELEASE).tar.xz
 PKG_SOURCE_URL:=https://download.qt.io/archive/qt/$(PKG_VERSION)/$(PKG_VERSION).$(PKG_RELEASE)/single
 PKG_BUILD_DIR=$(BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE)
 PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
-PKG_BUILD_DEPENDS:=libiconv
+PKG_BUILD_DEPENDS:=libiconv-full pcre2
 
 PKG_MAINTAINER:=Yaroslav Petrov <info@lank.me>
 
@@ -43,7 +43,7 @@ define Package/qt5/Default
   SUBMENU:=Qt5
   TITLE:=qt5
   URL:=http://qt-project.org
-  DEPENDS:=+librt +zlib +libstdcpp +libpcre16 +glib2 +libpthread +libudev +libatomic +libmysqlclient @!LINUX_2_6
+  DEPENDS:=+librt +zlib +libstdcpp +libpcre2-16 +glib2 +libpthread +libudev +libatomic +libmysqlclient @!LINUX_2_6
 endef
 
 define Package/qt5-core
@@ -66,6 +66,12 @@ endef
 define Package/qt5-widgets
   $(call Package/qt5/Default)
   TITLE+=widgets
+  DEPENDS+=+qt5-core +qt5-network libjpeg-turbo
+endef
+
+define Package/qt5-websockets
+  $(call Package/qt5/Default)
+  TITLE+=websockets
   DEPENDS+=+qt5-core +qt5-network
 endef
 
@@ -240,6 +246,13 @@ define Package/qt5-widgets/install
 	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/fonts/* $(1)/usr/lib/fonts/
 endef
 
+define Package/qt5-websockets/install
+	$(INSTALL_DIR) $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtwebsockets/lib/libQt5WebSockets.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtwebsockets/lib/libQt5WebSockets.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtwebsockets/lib/libQt5WebSockets.la $(1)/usr/lib/
+endef
+
 define Package/qt5-sql/install
 	$(INSTALL_DIR) $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/lib/Qt/plugins/sqldrivers/
@@ -294,6 +307,7 @@ endef
 $(eval $(call BuildPackage,qt5-core))
 $(eval $(call BuildPackage,qt5-concurrent))
 $(eval $(call BuildPackage,qt5-network))
+$(eval $(call BuildPackage,qt5-websockets))
 $(eval $(call BuildPackage,qt5-widgets))
 $(eval $(call BuildPackage,qt5-sql))
 $(eval $(call BuildPackage,qt5-xml))

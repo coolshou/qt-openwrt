@@ -66,7 +66,7 @@ endef
 define Package/qt5-widgets
   $(call Package/qt5/Default)
   TITLE+=widgets
-  DEPENDS+=+qt5-core +qt5-network libjpeg-turbo
+  DEPENDS+=+qt5-core +qt5-network +libjpeg-turbo
 endef
 
 define Package/qt5-websockets

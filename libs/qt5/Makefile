@@ -202,6 +202,12 @@ define Build/InstallDev
 	$(MAKE) -C $(PKG_BUILD_DIR) install
 	$(CP) $(PKG_BUILD_DIR)/qtbase/bin/qmake $(TOOLCHAIN_DIR)/bin/
 	$(CP) $(PKG_BUILD_DIR)/qtbase/bin/qt.conf $(TOOLCHAIN_DIR)/bin/
+	$(INSTALL_DIR) $(TOOLCHAIN_DIR)/bin/mkspecs/common/
+	$(INSTALL_DIR) $(TOOLCHAIN_DIR)/bin/mkspecs/linux-openwrt-g++/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/mkspecs/common/linux.conf $(TOOLCHAIN_DIR)/bin/mkspecs/common/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/mkspecs/common/gcc-base-unix.conf $(TOOLCHAIN_DIR)/bin/mkspecs/common/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/mkspecs/common/g++-unix.conf $(TOOLCHAIN_DIR)/bin/mkspecs/common/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf $(TOOLCHAIN_DIR)/bin/mkspecs/linux-openwrt-g++/
 endef
 
 define Package/qt5-core/install

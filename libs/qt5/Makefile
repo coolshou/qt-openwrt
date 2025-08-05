@@ -43,7 +43,7 @@ define Package/qt5/Default
   SUBMENU:=Qt5
   TITLE:=qt5
   URL:=http://qt-project.org
-  DEPENDS:=+librt +zlib +libstdcpp +libpcre2-16 +glib2 +libpthread +libudev +libatomic +libmysqlclient +libopenssl3 @!LINUX_2_6
+  DEPENDS:=+librt +zlib +libstdcpp +libgcc +libpcre2-16 +glib2 +libpthread +libudev +libatomic +libmysqlclient +libopenssl3 @!LINUX_2_6
 endef
 
 define Package/qt5-core

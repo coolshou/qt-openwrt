@@ -139,7 +139,6 @@ define Build/Configure
 		CXXFLAGS= \
 		LDFLAGS= \
 		./configure \
-			CONFIG-=statx CONFIG-=renameat2 \
 			-prefix /usr \
 			-extprefix $(TOOLCHAIN_DIR) \
 			-sysroot $(TOOLCHAIN_DIR) \

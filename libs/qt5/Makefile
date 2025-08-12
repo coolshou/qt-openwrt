@@ -144,8 +144,7 @@ define Build/Configure
 			-sysroot $(TOOLCHAIN_DIR) \
 			-plugindir /usr/lib/Qt/plugins \
 			-xplatform linux-openwrt-g++ \
-			CONFIG-=statx \
-			CONFIG-=renameat2 \
+			QMAKE_CXXFLAGS="-DQT_NO_STATX -DQT_NO_RENAMEAT2" \
 			-opensource \
 			-confirm-license \
 			-force-asserts \

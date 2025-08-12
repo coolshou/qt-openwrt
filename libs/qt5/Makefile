@@ -144,6 +144,8 @@ define Build/Configure
 			-sysroot $(TOOLCHAIN_DIR) \
 			-plugindir /usr/lib/Qt/plugins \
 			-xplatform linux-openwrt-g++ \
+			CONFIG-=statx \
+			CONFIG-=renameat2 \
 			-opensource \
 			-confirm-license \
 			-force-asserts \

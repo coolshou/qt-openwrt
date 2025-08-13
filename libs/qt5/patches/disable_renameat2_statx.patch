@@ -1,0 +1,18 @@
+--- ./qtbase/src/corelib/configure.json.org	2025-08-13 09:37:02.539507796 +0800
++++ ./qtbase/src/corelib/configure.json	2025-08-13 09:39:23.453642988 +0800
+@@ -518,6 +518,7 @@
+         "renameat2": {
+             "label": "renameat2()",
+             "type": "compile",
++            "condition": "false",
+             "test": {
+                 "head": "#define _ATFILE_SOURCE 1",
+                 "include": [ "fcntl.h", "stdio.h" ],
+@@ -527,6 +528,7 @@
+         "statx": {
+             "label": "statx() in libc",
+             "type": "compile",
++            "condition": "false",
+             "test": {
+                 "head": "#define _ATFILE_SOURCE 1",
+                 "include": [ "sys/types.h", "sys/stat.h", "unistd.h", "fcntl.h" ],

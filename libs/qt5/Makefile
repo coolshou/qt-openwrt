@@ -138,13 +138,13 @@ define Build/Configure
 		CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS)" \
 		CXXFLAGS= \
 		LDFLAGS= \
+		QMAKE_CXXFLAGS="-DQT_NO_STATX -DQT_NO_RENAMEAT2" \
 		./configure \
 			-prefix /usr \
 			-extprefix $(TOOLCHAIN_DIR) \
 			-sysroot $(TOOLCHAIN_DIR) \
 			-plugindir /usr/lib/Qt/plugins \
 			-xplatform linux-openwrt-g++ \
-			QMAKE_CXXFLAGS="-DQT_NO_STATX -DQT_NO_RENAMEAT2" \
 			-opensource \
 			-confirm-license \
 			-force-asserts \

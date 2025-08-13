@@ -1,5 +1,5 @@
 --- ./qtbase/src/corelib/configure.json.org	2025-08-13 09:37:02.539507796 +0800
-+++ ./qtbase/src/corelib/configure.json	2025-08-13 09:39:23.453642988 +0800
++++ ./qtbase/src/corelib/configure.json	2025-08-13 10:03:46.287643379 +0800
 @@ -518,6 +518,7 @@
          "renameat2": {
              "label": "renameat2()",
@@ -16,3 +16,21 @@
              "test": {
                  "head": "#define _ATFILE_SOURCE 1",
                  "include": [ "sys/types.h", "sys/stat.h", "unistd.h", "fcntl.h" ],
+@@ -778,7 +780,7 @@
+         },
+         "renameat2": {
+             "label": "renameat2()",
+-            "condition": "config.linux && tests.renameat2",
++            "condition": "false",
+             "output": [ "privateFeature" ]
+         },
+         "slog2": {
+@@ -788,7 +790,7 @@
+         },
+         "statx": {
+             "label": "statx() in libc",
+-            "condition": "config.linux && tests.statx",
++            "condition": "false",
+             "output": [ "privateFeature" ]
+         },
+         "syslog": {

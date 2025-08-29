@@ -171,7 +171,7 @@ define Build/Configure
 			-no-sql-mysql \
 			-I$(STAGING_DIR)/usr/include/mysql \
 			-L$(STAGING_DIR)/usr/lib \
-			-openssl \
+			-openssl-runtime \
 	)
 endef
 

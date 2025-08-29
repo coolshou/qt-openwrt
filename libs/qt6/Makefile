@@ -9,12 +9,12 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=qt5
-PKG_VERSION:=5.15
-PKG_RELEASE:=17
-PKG_MD5SUM:=5f212232bbc41f2eabbdee4fcbc4040e
+PKG_NAME:=qt6
+PKG_VERSION:=6.8
+PKG_RELEASE:=3
+PKG_MD5SUM:=10a39c4b4af4f465c4ff0352a6d18a0a
 
-PKG_SOURCE:=qt-everywhere-opensource-src-$(PKG_VERSION).$(PKG_RELEASE).tar.xz
+PKG_SOURCE:=qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE).tar.xz
 PKG_SOURCE_URL:=https://download.qt.io/archive/qt/$(PKG_VERSION)/$(PKG_VERSION).$(PKG_RELEASE)/single
 PKG_BUILD_DIR=$(BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE)
 PKG_BUILD_PARALLEL:=1
@@ -37,84 +37,84 @@ RSTRIP:= \
   STRIP_KMOD="$(STRIP)" \
   $(SCRIPT_DIR)/rstrip.sh
 
-define Package/qt5/Default
+define Package/qt6/Default
   SECTION:=libs
   CATEGORY:=Libraries
-  SUBMENU:=Qt5
-  TITLE:=qt5
+  SUBMENU:=Qt6
+  TITLE:=qt6
   URL:=http://qt-project.org
   DEPENDS:=+librt +zlib +libstdcpp +libgcc +libpcre2-16 +glib2 +libpthread +libudev +libatomic +libopenssl3 @!LINUX_2_6
 endef
 
-define Package/qt5-core
-  $(call Package/qt5/Default)
+define Package/qt6-core
+  $(call Package/qt6/Default)
   TITLE+=core
 endef
 
-define Package/qt5-concurrent
-  $(call Package/qt5/Default)
+define Package/qt6-concurrent
+  $(call Package/qt6/Default)
   TITLE+=concurrent
-  DEPENDS+=+qt5-core
+  DEPENDS+=+qt6-core
 endef
 
-define Package/qt5-network
-  $(call Package/qt5/Default)
+define Package/qt6-network
+  $(call Package/qt6/Default)
   TITLE+=network
-  DEPENDS+=+qt5-core
+  DEPENDS+=+qt6-core
 endef
 
-define Package/qt5-widgets
-  $(call Package/qt5/Default)
+define Package/qt6-widgets
+  $(call Package/qt6/Default)
   TITLE+=widgets
-  DEPENDS+=+qt5-core +qt5-network +libjpeg-turbo
+  DEPENDS+=+qt6-core +qt6-network +libjpeg-turbo
 endef
 
-define Package/qt5-websockets
-  $(call Package/qt5/Default)
+define Package/qt6-websockets
+  $(call Package/qt6/Default)
   TITLE+=websockets
-  DEPENDS+=+qt5-core +qt5-network
+  DEPENDS+=+qt6-core +qt6-network
 endef
 
-define Package/qt5-sql
-  $(call Package/qt5/Default)
+define Package/qt6-sql
+  $(call Package/qt6/Default)
   TITLE+=sql
-  DEPENDS+=+qt5-core
+  DEPENDS+=+qt6-core
 endef
 
-define Package/qt5-xml
-  $(call Package/qt5/Default)
+define Package/qt6-xml
+  $(call Package/qt6/Default)
   TITLE+=xml
-  DEPENDS+=+qt5-core
+  DEPENDS+=+qt6-core
 endef
 
-define Package/qt5-serialport
-  $(call Package/qt5/Default)
+define Package/qt6-serialport
+  $(call Package/qt6/Default)
   TITLE+=serialport
-  DEPENDS+=+qt5-core
+  DEPENDS+=+qt6-core
 endef
 
-define Package/qt5-serialbus
-  $(call Package/qt5/Default)
+define Package/qt6-serialbus
+  $(call Package/qt6/Default)
   TITLE+=serialbus
-  DEPENDS+=+qt5-core +qt5-network +qt5-serialport
+  DEPENDS+=+qt6-core +qt6-network +qt6-serialport
 endef
 
-define Package/qt5-xmlpatterns
-  $(call Package/qt5/Default)
+define Package/qt6-xmlpatterns
+  $(call Package/qt6/Default)
   TITLE+=xmlpatterns
-  DEPENDS+=+qt5-core +qt5-network
+  DEPENDS+=+qt6-core +qt6-network
 endef
 
-define Package/qt5-test
-  $(call Package/qt5/Default)
+define Package/qt6-test
+  $(call Package/qt6/Default)
   TITLE+=test
-  DEPENDS+=+qt5-core
+  DEPENDS+=+qt6-core
 endef
 
-define Package/qt5-location
-  $(call Package/qt5/Default)
+define Package/qt6-location
+  $(call Package/qt6/Default)
   TITLE+=location
-  DEPENDS+=+qt5-core
+  DEPENDS+=+qt6-core
 endef
 
 define Build/Configure
@@ -210,115 +210,115 @@ define Build/InstallDev
 	$(CP) $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf $(TOOLCHAIN_DIR)/bin/mkspecs/linux-openwrt-g++/
 endef
 
-define Package/qt5-core/install
+define Package/qt6-core/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Core.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Core.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Core.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Core.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Core.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Core.la $(1)/usr/lib/
 endef
 
-define Package/qt5-concurrent/install
+define Package/qt6-concurrent/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Concurrent.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Concurrent.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Concurrent.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Concurrent.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Concurrent.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Concurrent.la $(1)/usr/lib/
 endef
 
-define Package/qt5-network/install
+define Package/qt6-network/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Network.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Network.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Network.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Network.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Network.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Network.la $(1)/usr/lib/
 endef
 
-define Package/qt5-widgets/install
+define Package/qt6-widgets/install
 	$(INSTALL_DIR) $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/lib/Qt/plugins/generic/
 	$(INSTALL_DIR) $(1)/usr/lib/Qt/plugins/platforms/
 	$(INSTALL_DIR) $(1)/usr/lib/Qt/plugins/imageformats/
 	$(INSTALL_DIR) $(1)/usr/lib/fonts/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Gui.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Gui.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Gui.la 	$(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtsvg/lib/libQt5Svg.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtsvg/lib/libQt5Svg.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtsvg/lib/libQt5Svg.la $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Widgets.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Widgets.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Widgets.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Gui.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Gui.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Gui.la 	$(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtsvg/lib/libQt6Svg.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtsvg/lib/libQt6Svg.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtsvg/lib/libQt6Svg.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Widgets.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Widgets.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Widgets.la $(1)/usr/lib/
 	$(CP) $(PKG_BUILD_DIR)/qtbase/plugins/generic/*.so $(1)/usr/lib/Qt/plugins/generic/
 	$(CP) $(PKG_BUILD_DIR)/qtbase/plugins/platforms/*.so $(1)/usr/lib/Qt/plugins/platforms/
 	$(CP) $(PKG_BUILD_DIR)/qtbase/plugins/imageformats/*.so $(1)/usr/lib/Qt/plugins/imageformats/
 	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/fonts/* $(1)/usr/lib/fonts/
 endef
 
-define Package/qt5-websockets/install
+define Package/qt6-websockets/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtwebsockets/lib/libQt5WebSockets.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtwebsockets/lib/libQt5WebSockets.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtwebsockets/lib/libQt5WebSockets.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtwebsockets/lib/libQt6WebSockets.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtwebsockets/lib/libQt6WebSockets.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtwebsockets/lib/libQt6WebSockets.la $(1)/usr/lib/
 endef
 
-define Package/qt5-sql/install
+define Package/qt6-sql/install
 	$(INSTALL_DIR) $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/lib/Qt/plugins/sqldrivers/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Sql.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Sql.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Sql.la 	$(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Sql.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Sql.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Sql.la 	$(1)/usr/lib/
 	$(CP) $(PKG_BUILD_DIR)/qtbase/plugins/sqldrivers/*.so $(1)/usr/lib/Qt/plugins/sqldrivers/
 endef
 
-define Package/qt5-xml/install
+define Package/qt6-xml/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Xml.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Xml.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Xml.la 	$(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Xml.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Xml.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Xml.la 	$(1)/usr/lib/
 endef
 
-define Package/qt5-serialport/install
+define Package/qt6-serialport/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtserialport/lib/libQt5SerialPort.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtserialport/lib/libQt5SerialPort.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtserialport/lib/libQt5SerialPort.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtserialport/lib/libQt6SerialPort.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtserialport/lib/libQt6SerialPort.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtserialport/lib/libQt6SerialPort.la $(1)/usr/lib/
 endef
 
-define Package/qt5-serialbus/install
+define Package/qt6-serialbus/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtserialbus/lib/libQt5SerialBus.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtserialbus/lib/libQt5SerialBus.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtserialbus/lib/libQt5SerialBus.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtserialbus/lib/libQt6SerialBus.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtserialbus/lib/libQt6SerialBus.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtserialbus/lib/libQt6SerialBus.la $(1)/usr/lib/
 endef
 
-define Package/qt5-xmlpatterns/install
+define Package/qt6-xmlpatterns/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtxmlpatterns/lib/libQt5XmlPatterns.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtxmlpatterns/lib/libQt5XmlPatterns.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtxmlpatterns/lib/libQt5XmlPatterns.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtxmlpatterns/lib/libQt6XmlPatterns.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtxmlpatterns/lib/libQt6XmlPatterns.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtxmlpatterns/lib/libQt6XmlPatterns.la $(1)/usr/lib/
 endef
 
-define Package/qt5-test/install
+define Package/qt6-test/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Test.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Test.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt5Test.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Test.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Test.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtbase/lib/libQt6Test.la $(1)/usr/lib/
 endef
 
-define Package/qt5-location/install
+define Package/qt6-location/install
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtlocation/lib/libQt5Positioning.so* $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtlocation/lib/libQt5Positioning.prl $(1)/usr/lib/
-	$(CP) $(PKG_BUILD_DIR)/qtlocation/lib/libQt5Positioning.la $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtlocation/lib/libQt6Positioning.so* $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtlocation/lib/libQt6Positioning.prl $(1)/usr/lib/
+	$(CP) $(PKG_BUILD_DIR)/qtlocation/lib/libQt6Positioning.la $(1)/usr/lib/
 endef
 
-$(eval $(call BuildPackage,qt5-core))
-$(eval $(call BuildPackage,qt5-concurrent))
-$(eval $(call BuildPackage,qt5-network))
-$(eval $(call BuildPackage,qt5-websockets))
-$(eval $(call BuildPackage,qt5-widgets))
-$(eval $(call BuildPackage,qt5-sql))
-$(eval $(call BuildPackage,qt5-xml))
-$(eval $(call BuildPackage,qt5-serialport))
-$(eval $(call BuildPackage,qt5-serialbus))
-$(eval $(call BuildPackage,qt5-xmlpatterns))
-$(eval $(call BuildPackage,qt5-test))
-$(eval $(call BuildPackage,qt5-location))
+$(eval $(call BuildPackage,qt6-core))
+$(eval $(call BuildPackage,qt6-concurrent))
+$(eval $(call BuildPackage,qt6-network))
+$(eval $(call BuildPackage,qt6-websockets))
+$(eval $(call BuildPackage,qt6-widgets))
+$(eval $(call BuildPackage,qt6-sql))
+$(eval $(call BuildPackage,qt6-xml))
+$(eval $(call BuildPackage,qt6-serialport))
+$(eval $(call BuildPackage,qt6-serialbus))
+$(eval $(call BuildPackage,qt6-xmlpatterns))
+$(eval $(call BuildPackage,qt6-test))
+$(eval $(call BuildPackage,qt6-location))

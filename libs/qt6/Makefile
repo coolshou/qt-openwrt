@@ -141,7 +141,7 @@ define Build/Configure
 		./configure \
 			-prefix /usr \
 			-extprefix $(TOOLCHAIN_DIR) \
-			-sysroot $(TOOLCHAIN_DIR) \
+			-DCMAKE_SYSROOT=$(TOOLCHAIN_DIR) \
 			-plugindir /usr/lib/Qt/plugins \
 			-xplatform linux-openwrt-g++ \
 			-opensource \
@@ -158,7 +158,6 @@ define Build/Configure
 			-no-xcb \
 			-qt-zlib \
 			-qt-freetype \
-			-make libs \
 			-nomake examples \
 			-nomake tests \
 			-skip qtdeclarative \

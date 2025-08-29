@@ -158,8 +158,6 @@ define Build/Configure
 			-no-directfb \
 			-no-xcb \
 			-qt-zlib \
-			-qt-libjpeg \
-			-qt-libpng \
 			-nomake examples \
 			-nomake tests \
 			-skip qtdeclarative \

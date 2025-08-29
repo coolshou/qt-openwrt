@@ -157,7 +157,7 @@ define Build/Configure
 			-no-directfb \
 			-no-xcb \
 			-qt-zlib \
-			-freetype \
+			-freetype qt\
 			-nomake examples \
 			-nomake tests \
 			-skip qtdeclarative \

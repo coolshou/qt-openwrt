@@ -142,6 +142,7 @@ define Build/Configure
 			-prefix /usr \
 			-extprefix $(TOOLCHAIN_DIR) \
 			-DCMAKE_SYSROOT=$(TOOLCHAIN_DIR) \
+			-device-option CROSS_COMPILE=$(TARGET_CROSS) \
 			-plugindir /usr/lib/Qt/plugins \
 			-xplatform linux-openwrt-g++ \
 			-opensource \
@@ -157,6 +158,8 @@ define Build/Configure
 			-no-directfb \
 			-no-xcb \
 			-qt-zlib \
+			-qt-libjpeg \
+			-qt-libpng \
 			-nomake examples \
 			-nomake tests \
 			-skip qtdeclarative \

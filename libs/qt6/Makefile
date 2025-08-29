@@ -136,8 +136,8 @@ define Build/Configure
 		TARGET_INCDIRS="$(TARGET_INCDIRS)" \
 		TARGET_LIBDIRS="$(TARGET_LIBDIRS) $(STAGING_DIR)/usr/lib/" \
 		CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS)" \
-		CXXFLAGS= \
-		LDFLAGS= \
+		CXXFLAGS="$(TARGET_CXXFLAGS)" \
+		LDFLAGS="$(TARGET_LDFLAGS)" \
 		./configure \
 			-prefix /usr \
 			-extprefix $(TOOLCHAIN_DIR) \
@@ -157,7 +157,7 @@ define Build/Configure
 			-no-directfb \
 			-no-xcb \
 			-qt-zlib \
-			-qt-freetype \
+			-freetype \
 			-nomake examples \
 			-nomake tests \
 			-skip qtdeclarative \

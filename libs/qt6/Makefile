@@ -25,9 +25,7 @@ PKG_MAINTAINER:=Yaroslav Petrov <info@lank.me>
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
-#include $(TARGET_LDFLAGS)/nls.mk
-
-#-include $(if $(DUMP),,./files/qmake.mk)
+include $(INCLUDE_DIR)/cmake.mk
 
 # not using sstrip here as this fucks up the .so's somehow
 STRIP:=/bin/true
@@ -119,79 +117,43 @@ endef
 
 define Build/Configure
 	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/lib/fonts
-	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++
+# 	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++
 	$(CP) ./files/fonts/* $(PKG_BUILD_DIR)/qtbase/lib/fonts/
-	$(CP) ./files/qplatformdefs.h $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qplatformdefs.h
-	$(CP) ./files/qmake.conf $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
-	$(SED) 's@$$$$(TARGET_CROSS)@$(TARGET_CROSS)@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
+# 	$(CP) ./files/qplatformdefs.h $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qplatformdefs.h
+# 	$(CP) ./files/qmake.conf $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
+# 	$(SED) 's@$$$$(TARGET_CROSS)@$(TARGET_CROSS)@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
 	( cd $(PKG_BUILD_DIR) ; \
-		TARGET_CC="$(TARGET_CROSS)gcc" \
-		TARGET_CXX="$(TARGET_CROSS)g++" \
-		TARGET_AR="$(TARGET_CROSS)ar cqs" \
-		TARGET_OBJCOPY="$(TARGET_CROSS)objcopy" \
-		TARGET_RANLIB="$(TARGET_CROSS)ranlib" \
-		TARGET_CFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
-		TARGET_CXXFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
-		TARGET_LDFLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS) -lpthread -lrt" \
-		TARGET_INCDIRS="$(TARGET_INCDIRS)" \
-		TARGET_LIBDIRS="$(TARGET_LIBDIRS) $(STAGING_DIR)/usr/lib/" \
-		CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS)" \
-		CXXFLAGS="$(TARGET_CXXFLAGS)" \
-		LDFLAGS="$(TARGET_LDFLAGS)" \
-		./configure \
-			-prefix /usr \
-			-extprefix $(TOOLCHAIN_DIR) \
-			-DCMAKE_SYSROOT=$(TOOLCHAIN_DIR) \
-			-device-option CROSS_COMPILE=$(TARGET_CROSS) \
-			-plugindir /usr/lib/Qt/plugins \
-			-xplatform linux-openwrt-g++ \
-			-opensource \
-			-confirm-license \
-			-force-asserts \
-			-no-pch \
-			-no-rpath \
-			-no-cups \
-			-no-dbus \
-			-no-eglfs \
-			-no-kms \
-			-no-opengl \
-			-no-directfb \
-			-no-xcb \
-			-qt-zlib \
-			-nomake examples \
-			-nomake tests \
-			-skip qtdeclarative \
-			-skip qtmultimedia \
-			-skip activeqt \
-			-skip qtdoc \
-			-skip qtconnectivity \
-			-skip wayland \
-			-skip qtscript \
-			-no-sql-mysql \
-			-I$(STAGING_DIR)/usr/include/mysql \
-			-L$(STAGING_DIR)/usr/lib \
-			-openssl-runtime \
+		cmake -S . -B build \
+            -DCMAKE_SYSTEM_NAME=Linux \
+            -DCMAKE_SYSROOT=$(TOOLCHAIN_DIR) \
+            -DCMAKE_INSTALL_PREFIX=/usr \
+            -DCMAKE_C_COMPILER=$(TARGET_CROSS)gcc \
+            -DCMAKE_CXX_COMPILER=$(TARGET_CROSS)g++ \
+            -DCMAKE_AR=$(TARGET_CROSS)ar \
+            -DCMAKE_RANLIB=$(TARGET_CROSS)ranlib \
+            -DCMAKE_OBJCOPY=$(TARGET_CROSS)objcopy \
+            -DCMAKE_FIND_ROOT_PATH=$(STAGING_DIR) \
+            -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+            -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+            -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+            -DCMAKE_C_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
+            -DCMAKE_CXX_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
+            -DCMAKE_EXE_LINKER_FLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS) -lpthread -lrt" \
+            -DMYSQL_INCLUDE_DIR=$(STAGING_DIR)/usr/include/mysql \
+            -DMYSQL_LIB_DIR=$(STAGING_DIR)/usr/lib/mysql \
+            -DUSE_OPENSSL=ON \
+            -DOPENSSL_ROOT_DIR=$(STAGING_DIR)/usr \
+            -DQT_FEATURE_gui=OFF \
+            -DQT_FEATURE_dbus=OFF \
+            -DQT_FEATURE_opengl=OFF \
+            -DQT_FEATURE_sql_mysql=OFF \
+            -DQT_FEATURE_examples=OFF \
+            -DQT_FEATURE_tests=OFF \
 	)
 endef
 
 define Build/Compile
-	TARGET_CC="$(TARGET_CROSS)gcc" \
-	TARGET_CXX="$(TARGET_CROSS)g++" \
-	TARGET_AR="$(TARGET_CROSS)ar cqs" \
-	TARGET_OBJCOPY="$(TARGET_CROSS)objcopy" \
-	TARGET_RANLIB="$(TARGET_CROSS)ranlib" \
-	TARGET_CFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
-	TARGET_CXXFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
-	TARGET_LDFLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS) -ldl -lpthread -lrt" \
-	TARGET_INCDIRS="$(TARGET_INCDIRS)" \
-	TARGET_LIBDIRS="$(TARGET_LIBDIRS) $(STAGING_DIR)/usr/lib/" \
-	STAGING_DIR="$(STAGING_DIR)" \
-	STAGING_DIR_HOST="$(STAGING_DIR)/../host" \
-	PKG_CONFIG_SYSROOT="$(STAGING_DIR)" \
-	TARGET_CPPFLAGS+="-I$(STAGING_DIR)/usr/include/mysql" \
-	TARGET_LDFLAGS+="-L$(STAGING_DIR)/usr/lib/mysql -lmysqlclient" \
-	CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS)" \
-	$(MAKE) -j4 -C $(PKG_BUILD_DIR)
+	$(MAKE) -j4 -C $(PKG_BUILD_DIR)/build
 endef
 
 define Build/InstallDev

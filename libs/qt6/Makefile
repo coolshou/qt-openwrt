@@ -143,6 +143,7 @@ define Build/Configure
             -DMYSQL_LIB_DIR=$(STAGING_DIR)/usr/lib/mysql \
             -DUSE_OPENSSL=ON \
             -DOPENSSL_ROOT_DIR=$(STAGING_DIR)/usr \
+			-DQT_HOST_PATH=$(STAGING_DIR_HOST)/qt-host \
             -DQT_FEATURE_gui=OFF \
             -DQT_FEATURE_dbus=OFF \
             -DQT_FEATURE_opengl=OFF \

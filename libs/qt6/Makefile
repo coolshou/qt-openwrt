@@ -116,13 +116,27 @@ define Package/qt6-location
   DEPENDS+=+qt6-core
 endef
 
-#define Build/Prepare
+define Build/Prepare
+	# host build qt
+	(mkdir $(PKG_BUILD_DIR)/build-host ; cd $(PKG_BUILD_DIR)/build-host; \
+	cmake  $(PKG_BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE) \
+  	-DCMAKE_INSTALL_PREFIX=$(STAGING_DIR_HOST)/qt-host \
+  	-DCMAKE_BUILD_TYPE=Release \
+  	-DBUILD_SHARED_LIBS=ON \
+	-DCMAKE_C_COMPILER=$(TARGET_CROSS)gcc \
+    -DCMAKE_CXX_COMPILER=$(TARGET_CROSS)g++ \
+  	-DQT_BUILD_EXAMPLES=OFF \
+  	-DQT_BUILD_TESTS=OFF; \
+	cmake --build .; \
+	cmake --install .; \
+	)
 #	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/lib/fonts
 # 	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++
 #	$(CP) ./files/fonts/* $(PKG_BUILD_DIR)/qtbase/lib/fonts/
 # 	$(CP) ./files/qplatformdefs.h $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qplatformdefs.h
 # 	$(CP) ./files/qmake.conf $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
 # 	$(SED) 's@$$$$(TARGET_CROSS)@$(TARGET_CROSS)@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
+endef
 
 define Build/Configure
 	( cd $(PKG_BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE) ; \

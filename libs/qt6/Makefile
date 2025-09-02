@@ -17,6 +17,7 @@ PKG_MD5SUM:=10a39c4b4af4f465c4ff0352a6d18a0a
 PKG_SOURCE:=qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE).tar.xz
 PKG_SOURCE_URL:=https://download.qt.io/archive/qt/$(PKG_VERSION)/$(PKG_VERSION).$(PKG_RELEASE)/single
 PKG_BUILD_DIR=$(BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE)
+UNPACK_CMD=gzip -dc $(PKG_SOURCE) | $(TAR) -C $(1) -xf -
 PKG_BUILD_PARALLEL:=1
 PKG_USE_MIPS16:=0
 PKG_BUILD_DEPENDS:=libiconv-full pcre2 openssl
@@ -24,7 +25,7 @@ PKG_BUILD_DEPENDS:=libiconv-full pcre2 openssl
 PKG_MAINTAINER:=Yaroslav Petrov <info@lank.me>
 
 include $(INCLUDE_DIR)/package.mk
-include $(INCLUDE_DIR)/nls.mk
+#include $(INCLUDE_DIR)/nls.mk
 include $(INCLUDE_DIR)/cmake.mk
 
 # not using sstrip here as this fucks up the .so's somehow
@@ -116,12 +117,14 @@ define Package/qt6-location
 endef
 
 define Build/Prepare
-	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/lib/fonts
+#	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/lib/fonts
 # 	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++
-	$(CP) ./files/fonts/* $(PKG_BUILD_DIR)/qtbase/lib/fonts/
+#	$(CP) ./files/fonts/* $(PKG_BUILD_DIR)/qtbase/lib/fonts/
 # 	$(CP) ./files/qplatformdefs.h $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qplatformdefs.h
 # 	$(CP) ./files/qmake.conf $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
 # 	$(SED) 's@$$$$(TARGET_CROSS)@$(TARGET_CROSS)@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
+
+define Build/Configure
 	( cd $(PKG_BUILD_DIR) ; \
 		cmake -S . -B build \
             -DCMAKE_SYSTEM_NAME=Linux \

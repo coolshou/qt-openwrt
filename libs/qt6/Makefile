@@ -116,7 +116,7 @@ define Package/qt6-location
   DEPENDS+=+qt6-core
 endef
 
-define Build/Prepare
+#define Build/Prepare
 #	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/lib/fonts
 # 	$(INSTALL_DIR) $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++
 #	$(CP) ./files/fonts/* $(PKG_BUILD_DIR)/qtbase/lib/fonts/

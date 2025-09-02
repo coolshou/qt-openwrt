@@ -125,7 +125,7 @@ endef
 # 	$(SED) 's@$$$$(TARGET_CROSS)@$(TARGET_CROSS)@g' $(PKG_BUILD_DIR)/qtbase/mkspecs/linux-openwrt-g++/qmake.conf
 
 define Build/Configure
-	( cd $(PKG_BUILD_DIR) ; \
+	( cd $(PKG_BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE) ; \
 		cmake -S . -B build \
             -DCMAKE_SYSTEM_NAME=Linux \
             -DCMAKE_SYSROOT=$(TOOLCHAIN_DIR) \

@@ -148,6 +148,7 @@ define Build/Configure
 	cmake -S . -B build \
 		-DCMAKE_TOOLCHAIN_FILE=$(PKG_BUILD_DIR)/toolchain.cmake \
 		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DQT_HOST_PATH=/usr/lib/qt6 \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_C_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
 		-DCMAKE_CXX_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \

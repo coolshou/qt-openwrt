@@ -140,19 +140,9 @@ endef
 
 define Build/Configure
 	( cd $(PKG_BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE) ; \
-		cmake -S . -B build \
-            -DCMAKE_SYSTEM_NAME=Linux \
-            -DCMAKE_SYSROOT=$(TOOLCHAIN_DIR) \
+		cmake -G Ninja -S . -B build \
+			-DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
             -DCMAKE_INSTALL_PREFIX=/usr \
-            -DCMAKE_C_COMPILER=$(TARGET_CROSS)gcc \
-            -DCMAKE_CXX_COMPILER=$(TARGET_CROSS)g++ \
-            -DCMAKE_AR=$(TARGET_CROSS)ar \
-            -DCMAKE_RANLIB=$(TARGET_CROSS)ranlib \
-            -DCMAKE_OBJCOPY=$(TARGET_CROSS)objcopy \
-            -DCMAKE_FIND_ROOT_PATH=$(STAGING_DIR) \
-            -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
-            -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
-            -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
             -DCMAKE_C_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
             -DCMAKE_CXX_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
             -DCMAKE_EXE_LINKER_FLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS) -lpthread -lrt" \

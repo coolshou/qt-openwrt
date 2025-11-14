@@ -145,7 +145,7 @@ define Build/Configure
 	$(SED) 's@$$$$(TARGET_CROSS)@$(TARGET_CROSS)@g' $(PKG_BUILD_DIR)/toolchain.cmake; \
 	$(SED) 's@$$$$(TOOLCHAIN_DIR)@$(TOOLCHAIN_DIR)@g' $(PKG_BUILD_DIR)/toolchain.cmake; \
 	cd $(PKG_BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE); \
-	cmake -S . -B build \
+	cmake $(CMAKE_OPTIONS) -S . -B build \
 		-DCMAKE_TOOLCHAIN_FILE=$(PKG_BUILD_DIR)/toolchain.cmake \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_BUILD_TYPE=Release \

@@ -28,6 +28,8 @@ include $(INCLUDE_DIR)/package.mk
 #include $(INCLUDE_DIR)/nls.mk
 include $(INCLUDE_DIR)/cmake.mk
 
+CMAKE_OPTIONS += -G"Ninja"
+
 # not using sstrip here as this fucks up the .so's somehow
 STRIP:=/bin/true
 RSTRIP:= \
@@ -146,6 +148,7 @@ define Build/Configure
 	cmake -S . -B build \
 		-DCMAKE_TOOLCHAIN_FILE=$(PKG_BUILD_DIR)/toolchain.cmake \
 		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_C_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
 		-DCMAKE_CXX_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
 		-DCMAKE_EXE_LINKER_FLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS) -lpthread -lrt" \

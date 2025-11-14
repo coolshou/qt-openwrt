@@ -140,6 +140,7 @@ endef
 
 define Build/Configure
 	($(CP) ./files/toolchain.cmake $(PKG_BUILD_DIR)/; \
+	$(SED) 's@$$$$(TARGET_CROSS)@$(TARGET_CROSS)@g' $(PKG_BUILD_DIR)toolchain.cmake; \
 	cd $(PKG_BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE); \
 	cmake -S . -B build \
 		-DCMAKE_TOOLCHAIN_FILE=$(PKG_BUILD_DIR)/toolchain.cmake \

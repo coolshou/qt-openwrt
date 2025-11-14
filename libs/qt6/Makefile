@@ -148,7 +148,6 @@ define Build/Configure
 	cmake -S . -B build \
 		-DCMAKE_TOOLCHAIN_FILE=$(PKG_BUILD_DIR)/toolchain.cmake \
 		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DQT_HOST_PATH=/usr/lib/qt6 \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_C_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
 		-DCMAKE_CXX_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
@@ -157,7 +156,6 @@ define Build/Configure
 		-DMYSQL_LIB_DIR=$(STAGING_DIR)/usr/lib/mysql \
 		-DUSE_OPENSSL=ON \
 		-DOPENSSL_ROOT_DIR=$(STAGING_DIR)/usr \
-		-DQT_HOST_PATH=$(STAGING_DIR_HOST)/qt-host \
 		-DQT_FEATURE_gui=OFF \
 		-DQT_FEATURE_dbus=OFF \
 		-DQT_FEATURE_opengl=OFF \
@@ -166,6 +164,8 @@ define Build/Configure
 		-DQT_FEATURE_tests=OFF \
 	)
 endef
+# 		-DQT_HOST_PATH=/usr/lib/qt6 \
+# 		-DQT_HOST_PATH=$(STAGING_DIR_HOST)/qt-host \
 
 #define Build/Compile
 #	$(MAKE) -j4 -C $(PKG_BUILD_DIR)/build

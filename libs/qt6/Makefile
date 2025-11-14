@@ -139,24 +139,25 @@ endef
 #endef
 
 define Build/Configure
-	( cd $(PKG_BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE) ; \
-		cmake -G Ninja -S . -B build \
-			-DCMAKE_TOOLCHAIN_FILE=toolchain.cmake \
-            -DCMAKE_INSTALL_PREFIX=/usr \
-            -DCMAKE_C_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
-            -DCMAKE_CXX_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
-            -DCMAKE_EXE_LINKER_FLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS) -lpthread -lrt" \
-            -DMYSQL_INCLUDE_DIR=$(STAGING_DIR)/usr/include/mysql \
-            -DMYSQL_LIB_DIR=$(STAGING_DIR)/usr/lib/mysql \
-            -DUSE_OPENSSL=ON \
-            -DOPENSSL_ROOT_DIR=$(STAGING_DIR)/usr \
-			-DQT_HOST_PATH=$(STAGING_DIR_HOST)/qt-host \
-            -DQT_FEATURE_gui=OFF \
-            -DQT_FEATURE_dbus=OFF \
-            -DQT_FEATURE_opengl=OFF \
-            -DQT_FEATURE_sql_mysql=OFF \
-            -DQT_FEATURE_examples=OFF \
-            -DQT_FEATURE_tests=OFF \
+	($(CP) ./files/toolchain.cmake $(PKG_BUILD_DIR)/; \
+	cd $(PKG_BUILD_DIR)/qt-everywhere-src-$(PKG_VERSION).$(PKG_RELEASE); \
+	cmake -S . -B build \
+		-DCMAKE_TOOLCHAIN_FILE=$(PKG_BUILD_DIR)/toolchain.cmake \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_C_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
+		-DCMAKE_CXX_FLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
+		-DCMAKE_EXE_LINKER_FLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS) -lpthread -lrt" \
+		-DMYSQL_INCLUDE_DIR=$(STAGING_DIR)/usr/include/mysql \
+		-DMYSQL_LIB_DIR=$(STAGING_DIR)/usr/lib/mysql \
+		-DUSE_OPENSSL=ON \
+		-DOPENSSL_ROOT_DIR=$(STAGING_DIR)/usr \
+		-DQT_HOST_PATH=$(STAGING_DIR_HOST)/qt-host \
+		-DQT_FEATURE_gui=OFF \
+		-DQT_FEATURE_dbus=OFF \
+		-DQT_FEATURE_opengl=OFF \
+		-DQT_FEATURE_sql_mysql=OFF \
+		-DQT_FEATURE_examples=OFF \
+		-DQT_FEATURE_tests=OFF \
 	)
 endef
 

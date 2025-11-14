@@ -1,7 +1,7 @@
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSROOT "$(TOOLCHAIN_DIR)")
 # Host of Qt6
-set(CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake")
+set(Qt6HostInfo_DIR "/usr/lib/x86_64-linux-gnu/cmake/Qt6HostInfo")
 set(QT_HOST_PATH "/usr/lib/qt6")
 
 set(CMAKE_C_COMPILER "$(TARGET_CROSS)gcc")
